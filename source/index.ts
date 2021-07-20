@@ -1,4 +1,4 @@
-import EventEmitter from 'eventemitter3';
+import { EventEmitter } from 'eventemitter3';
 import pTimeout, {TimeoutError} from 'p-timeout';
 import {Queue, RunFunction} from './queue.js';
 import PriorityQueue from './priority-queue.js';
@@ -83,8 +83,8 @@ export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsT
 		this._queue = new options.queueClass!();
 		this._queueClass = options.queueClass!;
 		this.concurrency = options.concurrency!;
-		this._timeout = options.timeout;
-		this._throwOnTimeout = options.throwOnTimeout === true;
+		this._timeout = options['timeout'];
+		this._throwOnTimeout = options['throwOnTimeout'] === true;
 		this._isPaused = options.autoStart === false;
 	}
 
@@ -240,11 +240,11 @@ export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsT
 				this._intervalCount++;
 
 				try {
-					const operation = (this._timeout === undefined && options.timeout === undefined) ? fn() : pTimeout(
+					const operation = (this._timeout === undefined && options['timeout'] === undefined) ? fn() : pTimeout(
 						Promise.resolve(fn()),
-						(options.timeout === undefined ? this._timeout : options.timeout) as number,
+						(options['timeout'] === undefined ? this._timeout : options['timeout']) as number,
 						() => {
-							if (options.throwOnTimeout === undefined ? this._throwOnTimeout : options.throwOnTimeout) {
+							if (options['throwOnTimeout'] === undefined ? this._throwOnTimeout : options['throwOnTimeout']) {
 								reject(timeoutError);
 							}
 
@@ -417,4 +417,4 @@ export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsT
 	}
 }
 
-export {Queue, QueueAddOptions, DefaultAddOptions, Options};
+export type {Queue, QueueAddOptions, DefaultAddOptions, Options};

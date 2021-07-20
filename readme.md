@@ -1,4 +1,6 @@
-# p-queue
+# @mekwall/p-queue
+
+This is a fork of [sindresorhus/p-queue](https://github.com/sindresorhus/p-queue) that provides both CommonJS and ES modules as a hybrid package.
 
 > Promise queue with concurrency control
 
@@ -7,7 +9,7 @@ Useful for rate-limiting async (or sync) operations. For example, when interacti
 ## Install
 
 ```
-$ npm install p-queue
+$ npm install @mekwall/p-queue
 ```
 
 ## Usage

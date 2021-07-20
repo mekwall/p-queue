@@ -1,0 +1,11 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmitOnError": false, // This breaks tsukuru
+		"incremental": true,
+		"isolatedModules": true,
+		"module": "CommonJS",
+		"outDir": "cjs"
+	},
+	"include": ["source"]
+}

@@ -1,25 +1,34 @@
 {
-	"name": "p-queue",
+	"name": "@mekwall/p-queue",
 	"version": "7.1.0",
-	"description": "Promise queue with concurrency control",
+	"description": "Promise queue with concurrency control in a hybrid package",
 	"license": "MIT",
-	"repository": "sindresorhus/p-queue",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mekwall/p-queue.git"
+	},
 	"funding": "https://github.com/sponsors/sindresorhus",
-	"type": "module",
-	"exports": "./dist/index.js",
+	"main": "cjs",
+	"types": "cjs",
+	"exports": {
+		".": {
+			"require": "./cjs/index.js",
+			"import": "./es/index.mjs"
+		}
+	},
 	"engines": {
 		"node": ">=12"
 	},
 	"scripts": {
-		"build": "del dist && tsc",
+		"rebuild": "npm run build --clean",
+		"build": "tsukuru -c ./tsconfig.build.json",
 		"test": "xo && npm run build && nyc ava",
-		"bench": "node --loader=ts-node/esm bench.ts",
-		"prepare": "npm run build"
+		"bench": "node --loader=ts-node/esm bench.ts"
 	},
 	"files": [
-		"dist"
+		"cjs",
+		"es"
 	],
-	"types": "dist/index.d.ts",
 	"keywords": [
 		"promise",
 		"queue",
@@ -60,7 +69,8 @@
 		"random-int": "^2.0.1",
 		"time-span": "^4.0.0",
 		"ts-node": "^9.1.1",
-		"typescript": "^4.2.3",
+		"tsukuru": "^0.7.2",
+		"typescript": "^4.3.5",
 		"xo": "^0.38.2"
 	},
 	"ava": {
@@ -81,12 +91,20 @@
 		"rules": {
 			"@typescript-eslint/member-ordering": "off",
 			"@typescript-eslint/no-floating-promises": "off",
-			"@typescript-eslint/no-invalid-void-type": "off"
+			"@typescript-eslint/no-invalid-void-type": "off",
+			"@typescript-eslint/dot-notation": "off"
 		}
 	},
 	"nyc": {
 		"extension": [
 			".ts"
 		]
+	},
+	"bugs": {
+		"url": "https://github.com/mekwall/p-queue/issues"
+	},
+	"homepage": "https://github.com/mekwall/p-queue#readme",
+	"directories": {
+		"test": "test"
 	}
 }
